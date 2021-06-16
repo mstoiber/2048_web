@@ -1,4 +1,4 @@
-name: github-ci
+name: Maven CI
 on:
   push
 
@@ -25,13 +25,12 @@ jobs:
           distribution: 'adopt'
 
       - name: Build with Maven
-        working-directory: 2048_web
         run: mvn compile
       - name: Use the Upload Artifact GitHub Action
         uses: actions/upload-artifact@v2
         with:
           name: code-${{ github.job }}-${{ github.sha }}
-          path: target/*
+          path: target
 
   test:
     needs:
@@ -52,8 +51,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Test Maven
-        working-directory: 2048_web
+      - name: Test with Maven
         run: mvn test
 
   package:
@@ -76,7 +74,6 @@ jobs:
           distribution: 'adopt'
 
       - name: Package with Maven
-        working-directory: 2048_web
         run: mvn package
       - name: Use the Upload Artifact GitHub Action
         uses: actions/upload-artifact@v2
@@ -93,5 +90,4 @@ jobs:
       url: http://localhost:8081/game2048
     steps:
       - name: Deploy War
-        working-directory: 2048_web
         run: cp -f ./target/*.war /usr/local/tomcat/webapps
