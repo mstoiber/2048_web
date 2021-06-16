@@ -1,4 +1,4 @@
-name: Maven CI
+name: github-ci
 on:
   push
 
@@ -52,7 +52,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Test with Maven
+      - name: Test Maven
         working-directory: 2048_web
         run: mvn test
 
